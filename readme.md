@@ -1,4 +1,14 @@
 
+# Smart lift
+
+description bla bla bla
+
+
+## Authors
+
+- [@andrealvimc](https://www.github.com/andrealvimc)
+
+
 ## Install and run
 
 This requires PyAudio to be installed on your machine, here is the installation process depending on your operating system:
