@@ -3,12 +3,21 @@ import speech_recognition as sr
 import os 
 from pydub import AudioSegment
 from pydub.silence import split_on_silence
+import serial
+import time
 
 # criar um objeto de reconhecimento de fala
 r = sr.Recognizer()
 
+# Defina a porta serial do Arduino e a taxa de transmissão (baud rate)
+porta_serial = "COM3"  # Substitua pela porta serial correta do seu Arduino
+baud_rate = 9600
 
 andares = ["terreo", "primeiro", "segundo", "terceiro", "quarto", "quinto", "sexto", "setimo", "oitavo", "nono", "decimo"]
+
+arduino = serial.Serial(porta_serial, baud_rate, timeout=1)
+# Aguarde um momento para que a comunicação serial seja estabelecida
+time.sleep(2)
 
 with sr.Microphone() as source:
     # ler os dados de áudio do microfone padrão
@@ -34,6 +43,7 @@ with sr.Microphone() as source:
         for word in words:
           # se a palavra estiver na lista de andares
           if word in andares:
+            arduino.write("subir "+word.encode('utf-8'))
             print("andar: ", word)
             break
 
@@ -44,6 +54,7 @@ with sr.Microphone() as source:
         for word in words:
           # se a palavra estiver na lista de andares
           if word in andares:
+            arduino.write("descer "+word.encode('utf-8'))
             print("andar: ", word)
             break
 
@@ -56,3 +67,4 @@ with sr.Microphone() as source:
     else:
       print("Não é elevador")
 
+arduino.close()

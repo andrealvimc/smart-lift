@@ -1,3 +1,4 @@
 pydub
 SpeechRecognition
 pyaudio
+pyserial
